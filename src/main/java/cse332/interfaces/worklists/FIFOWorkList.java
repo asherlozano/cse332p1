@@ -9,4 +9,5 @@ package cse332.interfaces.worklists;
  * @author Adam Blank
  */
 public abstract class FIFOWorkList<E> extends WorkList<E> {
+
 }

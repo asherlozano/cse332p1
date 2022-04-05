@@ -8,14 +8,26 @@ import cse332.interfaces.worklists.FIFOWorkList;
  * for method specifications.
  */
 public class ListFIFOQueue<E> extends FIFOWorkList<E> {
-
-    public ListFIFOQueue() {
-        throw new NotYetImplementedException();
+    private class Node<E>{
+        int data;
+        Node<E> next;
+        public Node (int data){
+            this.data = data;
+            this.next = null;
+        }
     }
+    private Node<E> front;
+    private Node<E> rear;
+
 
     @Override
     public void add(E work) {
-        throw new NotYetImplementedException();
+        Node<E> temp = new Node<E>(work);
+        if (this.front == null){
+            this.front = this.rear = temp;
+        }
+        this.rear.next = temp;
+        this.rear = temp;
     }
 
     @Override
@@ -25,16 +37,31 @@ public class ListFIFOQueue<E> extends FIFOWorkList<E> {
 
     @Override
     public E next() {
-        throw new NotYetImplementedException();
+        if (this.front == null){
+            throw new NullPointerException();
+        }
+        Node<E> temp = this.front;
+        Node<E> nextNode = this.front.next;
+        this.front = this.front.next;
+        if(this.front == null){
+            this.rear = null;
+        }
+        return
     }
 
     @Override
     public int size() {
-        throw new NotYetImplementedException();
+        int i = 0;
+        while (this.front.next != null){
+            i++;
+        }
+        return i;
     }
 
     @Override
     public void clear() {
-        throw new NotYetImplementedException();
+        while (this.front.next != null){
+            this.front = this.front.next;
+        }
     }
 }
