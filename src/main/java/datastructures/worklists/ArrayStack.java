@@ -8,14 +8,23 @@ import cse332.interfaces.worklists.LIFOWorkList;
  * for method specifications.
  */
 public class ArrayStack<E> extends LIFOWorkList<E> {
+    int size;
+    int stack[];
+    int top;
 
     public ArrayStack() {
-        throw new NotYetImplementedException();
+        this.size = size;
+        this.stack = new int[10];
+        this.top = -1;
     }
 
     @Override
     public void add(E work) {
-        throw new NotYetImplementedException();
+        if(top != 10){
+            top++;
+            stack[top] = work;
+        }
+        throw new IllegalArgumentException();
     }
 
     @Override
