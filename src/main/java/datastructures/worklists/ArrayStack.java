@@ -23,7 +23,7 @@ public class ArrayStack<E> extends LIFOWorkList<E> {
         if (size == arrayStack.length){
             E[] tempArray = (E[]) new Object[arrayStack.length * 2];
             for(int i = 0; i < arrayStack.length; i++){
-                tempArray E[i] = arrayStack E[i];
+                tempArray [i] = arrayStack [i];
             }
             arrayStack = tempArray;
         }

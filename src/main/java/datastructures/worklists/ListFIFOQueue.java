@@ -3,26 +3,34 @@ package datastructures.worklists;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.worklists.FIFOWorkList;
 
+import java.util.NoSuchElementException;
+
 /**
  * See cse332/interfaces/worklists/FIFOWorkList.java
  * for method specifications.
  */
 public class ListFIFOQueue<E> extends FIFOWorkList<E> {
-    private class Node<E>{
-        int data;
+    private static class Node<E>{
+        E data;
         Node<E> next;
-        public Node (int data){
+        public Node (E data){
             this.data = data;
             this.next = null;
         }
     }
+
     private Node<E> front;
     private Node<E> rear;
+    private int size;
+    public ListFIFOQueue(){
+        size = 0;
+    }
 
 
     @Override
     public void add(E work) {
         Node<E> temp = new Node<E>(work);
+        size++;
         if (this.front == null){
             this.front = this.rear = temp;
         }
@@ -32,7 +40,10 @@ public class ListFIFOQueue<E> extends FIFOWorkList<E> {
 
     @Override
     public E peek() {
-        throw new NotYetImplementedException();
+        if(front == null) {
+            throw new NoSuchElementException();
+        }
+        return front.data;
     }
 
     @Override
@@ -41,27 +52,23 @@ public class ListFIFOQueue<E> extends FIFOWorkList<E> {
             throw new NullPointerException();
         }
         Node<E> temp = this.front;
-        Node<E> nextNode = this.front.next;
         this.front = this.front.next;
         if(this.front == null){
             this.rear = null;
         }
-        return
+        size--;
+        return temp.data;
     }
 
     @Override
     public int size() {
-        int i = 0;
-        while (this.front.next != null){
-            i++;
-        }
-        return i;
+        return size;
     }
 
     @Override
     public void clear() {
-        while (this.front.next != null){
-            this.front = this.front.next;
-        }
+        front = null;
+        rear = null;
+        size = 0;
     }
 }
