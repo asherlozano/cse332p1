@@ -23,7 +23,7 @@ public class CircularArrayFIFOQueue<E> extends FixedSizeFIFOWorkList<E> {
     @Override
     public void add(E work) {
         if (isFull()){
-            throw new IllegalArgumentException();
+            throw new NullPointerException();
         }
         back = (back+1) % circleQueue.length;
         circleQueue[back] = work;

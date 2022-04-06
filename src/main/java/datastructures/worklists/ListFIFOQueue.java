@@ -41,7 +41,7 @@ public class ListFIFOQueue<E> extends FIFOWorkList<E> {
     @Override
     public E peek() {
         if(front == null) {
-            throw new NoSuchElementException();
+            throw new NullPointerException();
         }
         return front.data;
     }
