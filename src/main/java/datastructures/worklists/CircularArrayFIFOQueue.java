@@ -3,75 +3,90 @@ package datastructures.worklists;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
+import java.util.NoSuchElementException;
+
 /**
  * See cse332/interfaces/worklists/FixedSizeFIFOWorkList.java
  * for method specifications.
  */
 public class CircularArrayFIFOQueue<E> extends FixedSizeFIFOWorkList<E> {
-    private int currentSize;
-    private E[] circleQueue;
-    private int maxSize;
-    private int back;
+
     private int front;
+    private int rear;
+    private int size;
+    private E[] array;
     public CircularArrayFIFOQueue(int capacity) {
-        this.maxSize = capacity;
-        circleQueue = (E) new <E>[this.maxSize];
-        this.currentSize = 0;
-        this.front = this.back = -1;
+        super(capacity);
+        this.size = 0;
+        this.rear = 0;
+        this.front = 0;
+        this.array = (E[])new Comparable[capacity];
     }
 
     @Override
     public void add(E work) {
-        if (isFull()){
-            throw new NullPointerException();
+        if(isFull()){
+            throw new IllegalStateException();
         }
-        back = (back+1) % circleQueue.length;
-        circleQueue[back] = work;
-        currentSize++;
-        if (front == -1){
-            front = back;
+        array[rear] = work;
+        rear = (rear + 1) % array.length;
+        size++;
+        if(front == -1) {
+            front = rear;
         }
     }
 
     @Override
     public E peek() {
-        if (currentSize == 0){
-            throw new NullPointerException();
+        if (!hasWork()){
+            throw new NoSuchElementException();
         }
-        return circleQueue[front];
+        return array[front];
+
     }
 
     @Override
     public E peek(int i) {
-        return circleQueue[i];
+        return array[i];
     }
 
     @Override
     public E next() {
-        if(currentSize == 0){
-            throw new NullPointerException();
+        if(size == 0){
+            throw new NoSuchElementException();
         }
-        E delete = circleQueue[front];
-        circleQueue[front] = null;
-        front = (front + 1) % circleQueue.length;
-        currentSize--;
+        E delete = array[front];
+        array[front] = null;
+        front = (front + 1) % array.length;
+        size--;
         return delete;
+
     }
 
     @Override
     public void update(int i, E value) {
-        throw new NotYetImplementedException();
+        if( 0 <= i && i < size()) {
+            array[front + i] = value;
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
+        if(!this.hasWork()) {
+            throw new NullPointerException();
+        }
     }
 
     @Override
     public int size() {
-        return currentSize;
+        return size;
     }
 
     @Override
     public void clear() {
-        throw new NotYetImplementedException();
+        front = 0;
+        rear = 0;
+        size = 0;
     }
+
 
     @Override
     public int compareTo(FixedSizeFIFOWorkList<E> other) {
