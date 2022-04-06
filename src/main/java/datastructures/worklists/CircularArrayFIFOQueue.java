@@ -47,7 +47,7 @@ public class CircularArrayFIFOQueue<E> extends FixedSizeFIFOWorkList<E> {
 
     @Override
     public E peek(int i) {
-        return array[i];
+        return array[(front+ i)% array.length];
     }
 
     @Override
