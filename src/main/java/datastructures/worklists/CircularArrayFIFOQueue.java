@@ -8,29 +8,54 @@ import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
  * for method specifications.
  */
 public class CircularArrayFIFOQueue<E> extends FixedSizeFIFOWorkList<E> {
+    private int currentSize;
+    private E[] circleQueue;
+    private int maxSize;
+    private int back;
+    private int front;
     public CircularArrayFIFOQueue(int capacity) {
-        super(capacity);
-        throw new NotYetImplementedException();
+        this.maxSize = capacity;
+        circleQueue = (E) new <E>[this.maxSize];
+        this.currentSize = 0;
+        this.front = this.back = -1;
     }
 
     @Override
     public void add(E work) {
-        throw new NotYetImplementedException();
+        if (isFull()){
+            throw new NullPointerException();
+        }
+        back = (back+1) % circleQueue.length;
+        circleQueue[back] = work;
+        currentSize++;
+        if (front == -1){
+            front = back;
+        }
     }
 
     @Override
     public E peek() {
-        throw new NotYetImplementedException();
+        if (currentSize == 0){
+            throw new NullPointerException();
+        }
+        return circleQueue[front];
     }
 
     @Override
     public E peek(int i) {
-        throw new NotYetImplementedException();
+        return circleQueue[i];
     }
 
     @Override
     public E next() {
-        throw new NotYetImplementedException();
+        if(currentSize == 0){
+            throw new NullPointerException();
+        }
+        E delete = circleQueue[front];
+        circleQueue[front] = null;
+        front = (front + 1) % circleQueue.length;
+        currentSize--;
+        return delete;
     }
 
     @Override
@@ -40,7 +65,7 @@ public class CircularArrayFIFOQueue<E> extends FixedSizeFIFOWorkList<E> {
 
     @Override
     public int size() {
-        throw new NotYetImplementedException();
+        return currentSize;
     }
 
     @Override
