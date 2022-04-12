@@ -38,17 +38,52 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
 
     @Override
     public V insert(K key, V value) {
-        throw new NotYetImplementedException();
+        if (key == null || value == null){
+            throw new IllegalArgumentException();
+        }
+        HashTrieNode front = (HashTrieNode) this.root;
+        for (A search : key){
+            if (front.pointers.find(search) == null){
+                front.pointers.insert(search, new HashTrieNode());
+                front = front.pointers.find(search);
+            }
+            front = front.pointers.find(search);
+        }
+        if (front.value == null){
+            size++;
+        }
+        front.value = value;
+        return front.value;
     }
 
     @Override
     public V find(K key) {
-        throw new NotYetImplementedException();
+        if (key == null){
+            throw new IllegalArgumentException();
+        }
+        HashTrieNode front = (HashTrieNode) this.root;
+        for (A temp : key){
+            if (front.pointers.find(temp) == null){
+                return null;
+            }
+            front = front.pointers.find(temp);
+        }
+        return front.value;
     }
 
     @Override
     public boolean findPrefix(K key) {
-        throw new NotYetImplementedException();
+        if (key == null){
+            throw new IllegalArgumentException();
+        }
+        HashTrieNode traverse = (HashTrieNode) this.root;
+        for (A search : key){
+            if (traverse.pointers.find(search) == null){
+                return false;
+            }
+            traverse = traverse.pointers.find(search);
+        }
+        return true;
     }
 
     @Override
@@ -58,6 +93,8 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
 
     @Override
     public void clear() {
-        throw new NotYetImplementedException();
+        HashTrieNode front = (HashTrieNode) this.root;
+        front.pointers.clear();
+        this.size = 0;
     }
 }
