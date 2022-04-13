@@ -38,26 +38,106 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
 
     @Override
     public V insert(K key, V value) {
-        throw new NotYetImplementedException();
+        if (key == null || value == null){
+            throw new IllegalArgumentException();
+        }
+        HashTrieNode front = (HashTrieNode) this.root;
+        for (A search : key){
+            if (front.pointers.find(search) == null){
+                front.pointers.insert(search, new HashTrieNode());
+                front = front.pointers.find(search);
+            }
+            front = front.pointers.find(search);
+        }
+        if (front.value == null){
+            size++;
+        }
+        front.value = value;
+        return front.value;
     }
 
     @Override
     public V find(K key) {
-        throw new NotYetImplementedException();
+        if (key == null){
+            throw new IllegalArgumentException();
+        }
+        HashTrieNode front = (HashTrieNode) this.root;
+        for (A temp : key){
+            if (front.pointers.find(temp) == null){
+                return null;
+            }
+            front = front.pointers.find(temp);
+        }
+        return front.value;
     }
 
     @Override
     public boolean findPrefix(K key) {
-        throw new NotYetImplementedException();
+        if (key == null){
+            throw new IllegalArgumentException();
+        }
+        HashTrieNode traverse = (HashTrieNode) this.root;
+        for (A search : key){
+            if (traverse.pointers.find(search) == null){
+                return false;
+            }
+            traverse = traverse.pointers.find(search);
+        }
+        return true;
     }
 
     @Override
     public void delete(K key) {
-        throw new NotYetImplementedException();
+        HashTrieNode temp = (HashTrieNode) this.root;
+        HashTrieNode temp2 = (HashTrieNode) this.root;
+        HashTrieNode multiChild = null;
+        A holderChild = null;
+        A lastChild = null;
+
+        if(key == null) {
+            throw new IllegalArgumentException();
+        }
+        else {
+            for(A findKey: key) {
+                if(temp.pointers.find(findKey) == null) {
+                    return;
+                }
+                else {
+                    if(temp.pointers.size() > 1 || temp.value != null) {
+                        multiChild = temp;
+                        holderChild = findKey;
+                    }
+                }
+                temp = temp.pointers.find(findKey);
+                lastChild = findKey;
+            }
+            if(temp.pointers.size() > 0 ) {
+                temp.value = null;
+            }
+
+            else if(multiChild != null) {
+                multiChild.pointers.delete(holderChild);
+
+            }
+            if(temp.value == null) {
+                return;
+            }
+
+            temp.value = null;
+            this.size--;
+        }
+        if(temp2.pointers.size()<=1) {
+            temp2.pointers.delete(lastChild);
+        }
+        return;
+    }
     }
 
     @Override
     public void clear() {
-        throw new NotYetImplementedException();
+        HashTrieNode front = (HashTrieNode) this.root;
+        front.pointers.clear();
+        this.size = 0;
     }
 }
+

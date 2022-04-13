@@ -94,8 +94,10 @@ public class YourOwnCircularArrayFIFOQueueTests {
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
     public void test_size_afterInsertion_incrementsByOne() {
         CircularArrayFIFOQueue<Integer> queue = new CircularArrayFIFOQueue<>(5);
-        // Implement this test!
-        fail();
+        for (int i = 0; i < queue.capacity(); i ++){
+            queue.add(i);
+            assertEquals(i+1, queue.size());
+        }
     }
 
     /**
@@ -105,8 +107,10 @@ public class YourOwnCircularArrayFIFOQueueTests {
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
     public void test_add_isFull_throwsException() {
         CircularArrayFIFOQueue<Integer> queue = new CircularArrayFIFOQueue<>(5);
-        // Implement this test!
-        fail();
+        for (int i = 0; i < queue.capacity(); i ++){
+            queue.add(i);
+        }
+        assertThrows(IllegalStateException.class,() -> queue.add(6));
     }
 
     /**
@@ -123,8 +127,14 @@ public class YourOwnCircularArrayFIFOQueueTests {
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
     public void test_addNext_cyclesEntireQueue_returnsCorrect() {
         CircularArrayFIFOQueue<Integer> queue = new CircularArrayFIFOQueue<>(5);
-        // Implement this test!
-        fail();
+        for(int i = 0; i < queue.capacity(); i++){
+            queue.add(i);
+        }
+        for(int i = 0; i < queue.capacity(); i++){
+            queue.next();
+        }
+        queue.add(1);
+        assertEquals(1, queue.peek());
     }
 
 }
