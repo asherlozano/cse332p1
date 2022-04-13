@@ -43,14 +43,11 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         }
         HashTrieNode front = (HashTrieNode) this.root;
         for (A search : key){
-            if (!front.pointers.containsKey(search)){
+            Object val = front.pointers.get(search);
+            if (val == null){
                 front.pointers.put(search, new HashTrieNode());
-                front = front.pointers.get(search);
             }
             front = front.pointers.get(search);
-        }
-        if (front.value == null){
-            size++;
         }
         front.value = value;
         return front.value;
@@ -78,7 +75,8 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         }
         HashTrieNode traverse = (HashTrieNode) this.root;
         for (A search : key){
-            if (!traverse.pointers.containsKey(search)){
+            Object val = traverse.pointers.containsKey(search);
+            if (val == null){
                 return false;
             }
             traverse = traverse.pointers.get(search);
@@ -99,7 +97,8 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         }
         else {
             for(A findKey: key) {
-                if(temp.pointers.find(findKey) == null) {
+                Object value = temp.pointers.get(findKey);
+                if(value  == null) {
                     return;
                 }
                 else {
@@ -108,7 +107,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                         holderChild = findKey;
                     }
                 }
-                temp = temp.pointers.find(findKey);
+                temp = temp.pointers.get(findKey);
                 lastChild = findKey;
             }
             if(temp.pointers.size() > 0 ) {
@@ -116,7 +115,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
             }
 
             else if(multiChild != null) {
-                multiChild.pointers.delete(holderChild);
+                multiChild.pointers.remove(holderChild);
 
             }
             if(temp.value == null) {
@@ -127,10 +126,9 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
             this.size--;
         }
         if(temp2.pointers.size()<=1) {
-            temp2.pointers.delete(lastChild);
+            temp2.pointers.remove(lastChild);
         }
         return;
-    }
     }
 
     @Override
