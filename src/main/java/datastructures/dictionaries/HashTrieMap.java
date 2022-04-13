@@ -43,11 +43,11 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         }
         HashTrieNode front = (HashTrieNode) this.root;
         for (A search : key){
-            if (front.pointers.find(search) == null){
-                front.pointers.insert(search, new HashTrieNode());
-                front = front.pointers.find(search);
+            if (!front.pointers.containsKey(search)){
+                front.pointers.put(search, new HashTrieNode());
+                front = front.pointers.get(search);
             }
-            front = front.pointers.find(search);
+            front = front.pointers.get(search);
         }
         if (front.value == null){
             size++;
@@ -63,10 +63,10 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         }
         HashTrieNode front = (HashTrieNode) this.root;
         for (A temp : key){
-            if (front.pointers.find(temp) == null){
+            if (!front.pointers.containsKey(temp)){
                 return null;
             }
-            front = front.pointers.find(temp);
+            front = front.pointers.get(temp);
         }
         return front.value;
     }
@@ -78,10 +78,10 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         }
         HashTrieNode traverse = (HashTrieNode) this.root;
         for (A search : key){
-            if (traverse.pointers.find(search) == null){
+            if (!traverse.pointers.containsKey(search)){
                 return false;
             }
-            traverse = traverse.pointers.find(search);
+            traverse = traverse.pointers.get(search);
         }
         return true;
     }
