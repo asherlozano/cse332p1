@@ -88,7 +88,49 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
 
     @Override
     public void delete(K key) {
-        throw new NotYetImplementedException();
+        HashTrieNode temp = (HashTrieNode) this.root;
+        HashTrieNode temp2 = (HashTrieNode) this.root;
+        HashTrieNode multiChild = null;
+        A holderChild = null;
+        A lastChild = null;
+
+        if(key == null) {
+            throw new IllegalArgumentException();
+        }
+        else {
+            for(A findKey: key) {
+                if(temp.pointers.find(findKey) == null) {
+                    return;
+                }
+                else {
+                    if(temp.pointers.size() > 1 || temp.value != null) {
+                        multiChild = temp;
+                        holderChild = findKey;
+                    }
+                }
+                temp = temp.pointers.find(findKey);
+                lastChild = findKey;
+            }
+            if(temp.pointers.size() > 0 ) {
+                temp.value = null;
+            }
+
+            else if(multiChild != null) {
+                multiChild.pointers.delete(holderChild);
+
+            }
+            if(temp.value == null) {
+                return;
+            }
+
+            temp.value = null;
+            this.size--;
+        }
+        if(temp2.pointers.size()<=1) {
+            temp2.pointers.delete(lastChild);
+        }
+        return;
+    }
     }
 
     @Override
@@ -98,3 +140,4 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         this.size = 0;
     }
 }
+
