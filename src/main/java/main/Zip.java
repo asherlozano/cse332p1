@@ -27,8 +27,8 @@ public class Zip {
     /**
      * Constants that define the input and output
      **/
-    public static final String ZIP_NAME = "tet.zip";
-    public static final String FILE_TO_COMPRESS = "C:\\Users\\catam\\IdeaProjects\\p1-clefable\\src\\main\\java\\main\\bl.file";
+    public static final String ZIP_NAME = "test.zip";
+    public static final String FILE_TO_COMPRESS = "C:\\Users\\catam\\IdeaProjects\\p1-clefable\\bl.file";
 
     public static void main(String[] args) throws IOException {
         FileOutputStream fos = new FileOutputStream(ZIP_NAME);
