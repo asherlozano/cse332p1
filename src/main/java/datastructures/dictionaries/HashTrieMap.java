@@ -95,7 +95,6 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         HashTrieNode multiChild = null;
         A holderChild = null;
         A lastChild = null;
-        this.size--;
 
         if(key == null) {
             throw new NoSuchElementException();
@@ -103,7 +102,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         else {
             for(A findKey: key) {
                 Object value = temp.pointers.get(findKey);
-                if(value  == null) {
+                if(value == null) {
                     return;
                 }
                 else {
