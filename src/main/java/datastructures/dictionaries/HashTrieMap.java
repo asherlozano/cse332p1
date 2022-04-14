@@ -77,11 +77,13 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         }
         HashTrieNode traverse = (HashTrieNode) this.root;
         for (A search : key){
-            Object val = traverse.pointers.containsKey(search);
-            if (val == null){
+            if (!traverse.pointers.containsKey(search)){
                 return false;
             }
             traverse = traverse.pointers.get(search);
+            if (traverse == null){
+                return false;
+            }
         }
         return true;
     }
