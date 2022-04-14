@@ -125,6 +125,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
             temp.value = null;
             this.size--;
             if (temp2.pointers.size() <= 1) {
+                this.size--;
                 temp2.pointers.remove(lastChild);
             }
         }
