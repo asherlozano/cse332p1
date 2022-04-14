@@ -117,14 +117,14 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                 temp.value = null;
             } else if (multiChild != null) {
                 multiChild.pointers.remove(holderChild);
-                this.size--;
+                size--;
 
             }
             if (temp.value == null) {
                 return;
             }
             temp.value = null;
-            this.size--;
+            size--;
             if (temp2.pointers.size() <= 1) {
                 temp2.pointers.remove(lastChild);
             }
