@@ -58,7 +58,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
     @Override
     public V find(K key) {
         if (key == null){
-            throw new NoSuchElementException();
+            throw new IllegalArgumentException();
         }
         HashTrieNode front = (HashTrieNode) this.root;
         for (A temp : key){
@@ -73,7 +73,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
     @Override
     public boolean findPrefix(K key) {
         if (key == null){
-            throw new NoSuchElementException();
+            throw new IllegalArgumentException();
         }
         HashTrieNode traverse = (HashTrieNode) this.root;
         for (A search : key){
