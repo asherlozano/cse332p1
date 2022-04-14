@@ -48,10 +48,10 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
             }
             front = front.pointers.get(search);
         }
-        V returnVal = front.value;
         if(front.value == null){
             size++;
         }
+        V returnVal = front.value;
         front.value = value;
         return returnVal;
     }
