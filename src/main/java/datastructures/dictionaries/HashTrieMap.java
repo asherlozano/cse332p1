@@ -40,17 +40,18 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
     @Override
     public V insert(K key, V value) {
         if (key == null || value == null){
-            throw new NoSuchElementException();
+            throw new IllegalArgumentException();
         }
         HashTrieNode front = (HashTrieNode) this.root;
         for (A search : key){
-            Object val = front.pointers.get(search);
-            if (val == null){
+            if (!front.pointers.containsKey(search)){
                 front.pointers.put(search, new HashTrieNode());
             }
             front = front.pointers.get(search);
         }
-        this.size++;
+        if(front == null){
+            size++;
+        };
         front.value = value;
         return front.value;
     }
