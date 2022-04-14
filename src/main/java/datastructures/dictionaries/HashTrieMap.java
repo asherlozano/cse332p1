@@ -96,49 +96,45 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         A holderChild = null;
         A lastChild = null;
 
-        if(key == null) {
+        if (key == null) {
             throw new NoSuchElementException();
-        }
-        else {
-            for(A findKey: key) {
+        } else {
+            for (A findKey : key) {
                 Object value = temp.pointers.get(findKey);
-                if(value == null) {
+                if (value == null) {
                     return;
+                } else {
+                    if (temp.pointers.size() > 1 || temp.value != null) {
+                        multiChild = temp;
+                        holderChild = findKey;
+                    }
                 }
-            else {
-                if(temp.pointers.size() > 1 || temp.value != null) {
-                    multiChild = temp;
-                    holderChild = findKey;
-                }
-            }
                 temp = temp.pointers.get(findKey);
                 lastChild = findKey;
             }
-            if(temp.pointers.size() > 0 ) {
+            if (temp.pointers.size() > 0) {
                 temp.value = null;
-            }
-
-            else if(multiChild != null) {
+            } else if (multiChild != null) {
                 multiChild.pointers.remove(holderChild);
 
             }
-            if(temp.value == null) {
+            if (temp.value == null) {
                 return;
             }
-        temp.value = null;
-        this.size--;
-        if(temp2.pointers.size() <= 1) {
-            temp2.pointers.remove(lastChild);
+            temp.value = null;
+            this.size--;
+            if (temp2.pointers.size() <= 1) {
+                temp2.pointers.remove(lastChild);
+            }
         }
-        return;
     }
 
-    @Override
-    public void clear() {
-        HashTrieNode front = (HashTrieNode) this.root;
-        front.pointers.clear();
-        this.size = 0;
-    }
+        @Override
+        public void clear () {
+            HashTrieNode front = (HashTrieNode) this.root;
+            front.pointers.clear();
+            this.size = 0;
+        }
 }
 
 
