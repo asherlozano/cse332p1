@@ -49,7 +49,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
             }
             front = front.pointers.get(search);
         }
-        if(front == null){
+        if(front.value == null){
             size++;
         };
         front.value = value;
