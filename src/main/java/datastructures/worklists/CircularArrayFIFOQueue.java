@@ -71,7 +71,7 @@ public class CircularArrayFIFOQueue<E> extends FixedSizeFIFOWorkList<E> {
             throw new IndexOutOfBoundsException();
         }
         if(!this.hasWork()) {
-            throw new NullPointerException();
+            throw new NoSuchElementException();
         }
     }
 
