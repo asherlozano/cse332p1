@@ -1,6 +1,5 @@
 package datastructures.dictionaries;
 
-import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.trie.TrieMap;
 import cse332.types.BString;
 
@@ -99,7 +98,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         A lastChild = null;
 
         if (key == null) {
-            throw new NoSuchElementException();
+            throw new IllegalArgumentException();
         } else {
             for (A findKey : key) {
                 Object value = temp.pointers.get(findKey);
@@ -118,13 +117,13 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                 temp.value = null;
             } else if (multiChild != null) {
                 multiChild.pointers.remove(holderChild);
+                this.size--;
 
             }
             if (temp.value == null) {
                 return;
             }
             temp.value = null;
-            this.size--;
             this.size--;
             if (temp2.pointers.size() <= 1) {
                 temp2.pointers.remove(lastChild);
