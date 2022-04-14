@@ -129,6 +129,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                 temp2.pointers.remove(lastChild);
             }
         }
+        return;
     }
 
         @Override
