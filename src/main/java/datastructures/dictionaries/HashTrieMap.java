@@ -110,10 +110,10 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                         this.size--;
                     }
                 }
-                size++;
                 temp = temp.pointers.get(findKey);
                 lastChild = findKey;
             }
+            size++;
             if (temp.pointers.size() > 0) {
                 temp.value = null;
 //                this.size--;
