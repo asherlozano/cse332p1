@@ -95,6 +95,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         HashTrieNode multiChild = null;
         A holderChild = null;
         A lastChild = null;
+        size = size - 1;
 
         if(key == null) {
             throw new NoSuchElementException();
