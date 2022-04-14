@@ -52,7 +52,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         if(front.value == null){
             size++;
         }
-//        front.value = value;
+        front.value = value;
         return front.value;
     }
 
