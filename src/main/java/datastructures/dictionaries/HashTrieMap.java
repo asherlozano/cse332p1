@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 /**
  * See cse332/interfaces/trie/TrieMap.java
@@ -47,6 +48,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
             if (val == null){
                 front.pointers.put(search, new HashTrieNode());
             }
+            this.size++;
             front = front.pointers.get(search);
         }
         front.value = value;
@@ -56,7 +58,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
     @Override
     public V find(K key) {
         if (key == null){
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException();
         }
         HashTrieNode front = (HashTrieNode) this.root;
         for (A temp : key){
@@ -71,7 +73,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
     @Override
     public boolean findPrefix(K key) {
         if (key == null){
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException();
         }
         HashTrieNode traverse = (HashTrieNode) this.root;
         for (A search : key){
@@ -93,7 +95,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         A lastChild = null;
 
         if(key == null) {
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException();
         }
         else {
             for(A findKey: key) {
@@ -102,6 +104,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                     return;
                 }
                 else {
+                    this.size--;
                     if(temp.pointers.size() > 1 || temp.value != null) {
                         multiChild = temp;
                         holderChild = findKey;
