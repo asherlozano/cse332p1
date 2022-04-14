@@ -105,7 +105,6 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                 return;
             }
             else {
-                this.size--;
                 if(temp.pointers.size() > 1 || temp.value != null) {
                     multiChild = temp;
                     holderChild = findKey;
@@ -119,17 +118,15 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
             }
 
             else if(multiChild != null) {
-                this.size--;
                 multiChild.pointers.remove(holderChild);
 
             }
             if(temp.value == null) {
                 return;
             }
-
+            this.size--;
             temp.value = null;
         if(temp2.pointers.size()<=1) {
-            this.size--;
             temp2.pointers.remove(lastChild);
         }
     }
